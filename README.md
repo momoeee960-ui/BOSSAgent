@@ -140,3 +140,4 @@ your-project/
 "monthly upgrade"   → comprehensive system upgrade proposal
 "team status"       → show all team versions
 ```
+
