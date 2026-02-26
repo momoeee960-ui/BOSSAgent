@@ -16,17 +16,24 @@ A drop-in prompt engineering system for [Claude Code](https://docs.anthropic.com
 ## Quick Start
 
 ```bash
-# 1. Copy to your project root
-cp -r agent/.claude /path/to/your/project/
-cp agent/CLAUDE.md /path/to/your/project/
+# 1. Clone this repo
+git clone https://github.com/yourname/boss-agent.git
 
-# 2. Open your project in Claude Code
+# 2. Copy CLAUDE.md and .claude/ to your project root
+cp boss-agent/CLAUDE.md /path/to/your/project/
+cp -r boss-agent/.claude /path/to/your/project/
+
+# 3. Open your project in Claude Code
 cd /path/to/your/project
 claude
 
-# 3. Say this:
+# 4. Say this:
 > "Help me initialize the project"
 ```
+
+That's it — just two things to copy:
+- **`CLAUDE.md`** — the BOSS agent brain (auto-loaded by Claude Code as project instructions)
+- **`.claude/`** — the entire team system (agents, hooks, memory, standards)
 
 BOSS will ask you 3 questions (what the project does, tech stack, current stage), then the team is ready.
 
