@@ -1,0 +1,69 @@
+{
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"require(require('path').join(process.env.CLAUDE_PROJECT_DIR,'.claude','hooks','protect-team-files.js'))\""
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"require(require('path').join(process.env.CLAUDE_PROJECT_DIR,'.claude','hooks','validate-bash-safety.js'))\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"require(require('path').join(process.env.CLAUDE_PROJECT_DIR,'.claude','hooks','log-agent-activity.js'))\""
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"process.env.LIFECYCLE_EVENT='START';require(require('path').join(process.env.CLAUDE_PROJECT_DIR,'.claude','hooks','log-subagent-lifecycle.js'))\""
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"process.env.LIFECYCLE_EVENT='STOP';require(require('path').join(process.env.CLAUDE_PROJECT_DIR,'.claude','hooks','log-subagent-lifecycle.js'))\""
+          }
+        ]
+      }
+    ],
+    "TeammateIdle": [
+      {
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "检查这个teammate是否真正完成了任务。如果任务描述清晰且已完成，回复 {\"ok\": true}。如果任务明显未完成或输出不完整，回复 {\"ok\": false, \"reason\": \"说明还需要完成什么\"}。"
+          }
+        ]
+      }
+    ]
+  },
+  "teammateMode": "in-process"
+}
